@@ -28,10 +28,19 @@
     packages = each (pkgs: {
       default = pkgs.buildEnv {
         name = "dotfiles";
-        paths = let
-          packages = self.packages.${pkgs.system};
-        in
-          with nixpkgs.lib; map (p: packages.${p}) (lists.remove "default" (attrNames packages));
+        paths =
+          (let
+            packages = self.packages.${pkgs.system};
+          in
+            with nixpkgs.lib; map (p: packages.${p}) (lists.remove "default" (attrNames packages)))
+          ++ (with pkgs; [
+            xh
+            jq
+            fd
+            jj
+            git
+            ripgrep
+          ]);
       };
       neovim = wrappers.lib.wrapPackage {
         inherit pkgs;
@@ -58,6 +67,7 @@
         package = pkgs.bash;
         flags = {
           "--rcfile" = pkgs.writeText "bashrc" ''
+            PS1="\[\e[01;32m\]\u@\h\[\e[01;34m\] \w \$\[\e[00m\] "
             eval "$(${self.packages.${pkgs.system}.direnv}/bin/direnv hook bash)"
           '';
         };
