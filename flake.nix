@@ -43,12 +43,33 @@
       tmux = wrappers.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.tmux;
+        env = {
+          "SHELL" = "${self.packages.${pkgs.system}.bash}/bin/bash";
+        };
         flags = {
           "-f" = ./tmux.conf;
         };
         preHook = ''
           unset __ETC_PROFILE_NIX_SOURCED
         '';
+      };
+      bash = wrappers.lib.wrapPackage {
+        inherit pkgs;
+        package = pkgs.bash;
+        flags = {
+          "--rcfile" = pkgs.writeText "bashrc" ''
+            eval "$(${self.packages.${pkgs.system}.direnv}/bin/direnv hook bash)"
+          '';
+        };
+      };
+      direnv = wrappers.lib.wrapPackage {
+        inherit pkgs;
+        package = pkgs.direnv;
+        env = {
+          "DIRENV_CONFIG" = pkgs.writeText "direnv" ''
+            source ${pkgs.nix-direnv}/share/nix-direnv/direnvrc
+          '';
+        };
       };
     });
   };
