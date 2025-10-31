@@ -58,9 +58,6 @@
         flags = {
           "-f" = ./tmux.conf;
         };
-        preHook = ''
-          unset __ETC_PROFILE_NIX_SOURCED
-        '';
       };
       bash = wrappers.lib.wrapPackage {
         inherit pkgs;
