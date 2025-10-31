@@ -68,6 +68,7 @@
         flags = {
           "--rcfile" = pkgs.writeText "bashrc" ''
             PS1="\[\e[01;32m\]\u@\h\[\e[01;34m\] \w \$\[\e[00m\] "
+            alias ls="${pkgs.eza}/bin/eza"
             eval "$(${self.packages.${pkgs.system}.direnv}/bin/direnv hook bash)"
           '';
         };
