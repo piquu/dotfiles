@@ -28,24 +28,23 @@
     packages = each (pkgs: {
       default = pkgs.buildEnv {
         name = "dotfiles";
-        paths =
-          let
-            packages = self.packages.${pkgs.system};
-          in
-            with nixpkgs.lib; map (p: packages.${p}) (lists.remove "default" (attrNames packages));
+        paths = let
+          packages = self.packages.${pkgs.stdenv.hostPlatform.system};
+        in
+          with nixpkgs.lib; map (p: packages.${p}) (lists.remove "default" (attrNames packages));
       };
       neovim = wrappers.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.neovim;
         flags = {
-          "-u" = ./nvim.lua;
+          "-u" = "${./nvim.lua}";
         };
       };
       tmux = wrappers.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.tmux;
         flags = {
-          "-f" = ./tmux.conf;
+          "-f" = "${./tmux.conf}";
         };
       };
     });
