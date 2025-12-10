@@ -68,6 +68,7 @@ vim.cmd("set completeopt+=menuone,popup,fuzzy,noinsert")
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
+vim.keymap.set("n", "<leader>d", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
 require("conform").setup({
