@@ -17,6 +17,7 @@ vim.pack.add({
   { src = "https://github.com/vague2k/vague.nvim" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
   { src = "https://github.com/neovim/nvim-lspconfig" },
+  { src = "https://github.com/stevearc/conform.nvim" },
   { src = "https://github.com/mason-org/mason.nvim" },
   { src = "https://github.com/stevearc/oil.nvim" },
   { src = "https://github.com/nvim-mini/mini.pick" },
@@ -34,10 +35,11 @@ require("nvim-treesitter.configs").setup({
 
 vim.lsp.enable({
   "rust_analyzer",
-  "sourcekit",
   "tinymist",
   "lua_ls",
+  "biome",
   "gleam",
+  "ts_ls",
 })
 vim.diagnostic.config({
   signs = {
@@ -66,6 +68,14 @@ vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
+
+require("conform").setup({
+  formatters_by_ft = {
+    javascript = { "biome" },
+    typescript = { "biome" },
+    typescriptreact = { "biome" },
+  },
+})
 
 require("mason").setup()
 
