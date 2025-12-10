@@ -40,6 +40,7 @@ vim.lsp.enable({
   "biome",
   "gleam",
   "ts_ls",
+  "emmet_ls",
 })
 vim.diagnostic.config({
   signs = {
