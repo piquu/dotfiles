@@ -14,18 +14,16 @@
     nvimno,
     ...
   }: let
-    each = f:
-      with nixpkgs.lib;
-        genAttrs systems.flakeExposed (
-          system:
-            f (import nixpkgs {
-              inherit system;
-              overlays = [nvimno.overlays.default];
-            })
-        );
+    systems = nixpkgs.lib.systems.flakeExposed;
+    forAllSystems = nixpkgs.lib.genAttrs systems;
   in {
-    formatter = each (pkgs: pkgs.alejandra);
-    packages = each (pkgs: {
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    packages = forAllSystems (system: let
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [nvimno.overlays.default];
+      };
+    in {
       default = pkgs.buildEnv {
         name = "dotfiles";
         paths = let
