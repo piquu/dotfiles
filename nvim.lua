@@ -83,13 +83,11 @@ require("mason").setup()
 
 require("mini.files").setup({
   content = {
-    prefix = function(fs_entry)
-      if fs_entry.fs_type == "directory" then
-        return "d ", "MiniFilesDirectory"
-      else
-        return ". ", "MiniFilesFile"
-      end
-    end,
+    prefix = function() end,
+  },
+
+  windows = {
+    preview = true,
   },
 })
 vim.keymap.set("n", "\\", MiniFiles.open)
