@@ -20,7 +20,7 @@ vim.pack.add({
   { src = "https://github.com/stevearc/conform.nvim" },
   { src = "https://github.com/mason-org/mason.nvim" },
   { src = "https://github.com/nvim-mini/mini.files" },
-  { src = "https://github.com/nvim-mini/mini.pick" },
+  { src = "https://github.com/ibhagwan/fzf-lua" },
 })
 
 require("vague").setup({ transparent = true })
@@ -94,6 +94,8 @@ require("mini.files").setup({
 })
 vim.keymap.set("n", "\\", MiniFiles.open)
 
-require("mini.pick").setup()
-vim.keymap.set("n", "<leader>s", "<cmd>Pick files<cr>")
-vim.keymap.set("n", "<leader>g", "<cmd>Pick grep<cr>")
+require("fzf-lua").setup({
+  fzf_bin = "sk",
+})
+vim.keymap.set("n", "<leader>s", FzfLua.files)
+vim.keymap.set("n", "<leader>g", FzfLua.live_grep)
