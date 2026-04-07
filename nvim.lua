@@ -19,7 +19,7 @@ vim.pack.add({
   { src = "https://github.com/neovim/nvim-lspconfig" },
   { src = "https://github.com/stevearc/conform.nvim" },
   { src = "https://github.com/mason-org/mason.nvim" },
-  { src = "https://github.com/stevearc/oil.nvim" },
+  { src = "https://github.com/nvim-mini/mini.files" },
   { src = "https://github.com/nvim-mini/mini.pick" },
 })
 
@@ -81,13 +81,18 @@ require("conform").setup({
 
 require("mason").setup()
 
-require("oil").setup({
-  default_file_explorer = true,
-  view_options = {
-    show_hidden = true,
+require("mini.files").setup({
+  content = {
+    prefix = function(fs_entry)
+      if fs_entry.fs_type == "directory" then
+        return "d ", "MiniFilesDirectory"
+      else
+        return ". ", "MiniFilesFile"
+      end
+    end,
   },
 })
-vim.keymap.set("n", "\\", "<cmd>Oil<cr>")
+vim.keymap.set("n", "\\", MiniFiles.open)
 
 require("mini.pick").setup()
 vim.keymap.set("n", "<leader>s", "<cmd>Pick files<cr>")
