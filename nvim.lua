@@ -13,6 +13,18 @@ vim.opt.termguicolors = true
 vim.cmd("setlocal spell spelllang=de_at,en_us")
 vim.g.mapleader = " "
 
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'fff.nvim' and (kind == 'install' or kind == 'update') then
+      if not ev.data.active then
+        vim.cmd.packadd('fff.nvim')
+      end
+      require('fff.download').download_or_build_binary()
+    end
+  end,
+})
+
 vim.pack.add({
   { src = "https://github.com/vague2k/vague.nvim" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
@@ -20,7 +32,7 @@ vim.pack.add({
   { src = "https://github.com/stevearc/conform.nvim" },
   { src = "https://github.com/mason-org/mason.nvim" },
   { src = "https://github.com/nvim-mini/mini.files" },
-  { src = "https://github.com/ibhagwan/fzf-lua" },
+  { src = "https://github.com/dmtrKovalenko/fff.nvim" },
 })
 
 require("vague").setup({ transparent = true })
@@ -92,8 +104,8 @@ require("mini.files").setup({
 })
 vim.keymap.set("n", "\\", MiniFiles.open)
 
-require("fzf-lua").setup({
-  fzf_bin = "sk",
-})
-vim.keymap.set("n", "<leader>s", FzfLua.files)
-vim.keymap.set("n", "<leader>g", FzfLua.live_grep)
+vim.g.fff = {
+  prompt = "? "
+}
+vim.keymap.set("n", "<leader>f", require("fff").find_files)
+vim.keymap.set("n", "<leader>g", require("fff").live_grep)
