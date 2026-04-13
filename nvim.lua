@@ -107,5 +107,5 @@ vim.keymap.set("n", "\\", MiniFiles.open)
 vim.g.fff = {
   prompt = "? "
 }
-vim.keymap.set("n", "<leader>f", require("fff").find_files)
+vim.keymap.set("n", "<leader>s", require("fff").find_files)
 vim.keymap.set("n", "<leader>g", require("fff").live_grep)
