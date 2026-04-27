@@ -31,7 +31,7 @@ vim.pack.add({
   { src = "https://github.com/neovim/nvim-lspconfig" },
   { src = "https://github.com/stevearc/conform.nvim" },
   { src = "https://github.com/mason-org/mason.nvim" },
-  { src = "https://github.com/nvim-mini/mini.files" },
+  { src = "https://github.com/stevearc/oil.nvim" },
   { src = "https://github.com/dmtrKovalenko/fff.nvim" },
 })
 
@@ -93,16 +93,8 @@ require("conform").setup({
 
 require("mason").setup()
 
-require("mini.files").setup({
-  content = {
-    prefix = function() end,
-  },
-
-  windows = {
-    preview = true,
-  },
-})
-vim.keymap.set("n", "\\", MiniFiles.open)
+require("oil").setup()
+vim.keymap.set("n", "\\", "<cmd>Oil<cr>")
 
 vim.g.fff = {
   prompt = "? "
