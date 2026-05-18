@@ -38,14 +38,6 @@
           "-u" = "${./nvim.lua}";
         };
       };
-      opencode = wrappers.lib.wrapPackage {
-        inherit pkgs;
-        package = pkgs.opencode;
-        env = {
-          OPENCODE_CONFIG_DIR = "${./opencode}";
-          XDG_CONFIG_HOME = "${./opencode}";
-        };
-      };
       tmux = wrappers.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.tmux;
