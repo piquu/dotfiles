@@ -34,6 +34,7 @@
       neovim = wrappers.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.neovim;
+        runtimeInputs = with pkgs; [tree-sitter];
         flags = {
           "-u" = "${./nvim.lua}";
         };

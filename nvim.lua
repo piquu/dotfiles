@@ -14,7 +14,7 @@ vim.g.mapleader = " "
 
 vim.pack.add({
   { src = "https://github.com/vague2k/vague.nvim" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+  { src = "https://github.com/romus204/tree-sitter-manager.nvim" },
   { src = "https://github.com/neovim/nvim-lspconfig" },
   { src = "https://github.com/stevearc/conform.nvim" },
   { src = "https://github.com/stevearc/oil.nvim" },
@@ -24,11 +24,7 @@ require("vague").setup({ transparent = true })
 vim.cmd("colorscheme vague")
 vim.cmd(":hi statusline guibg=NONE")
 
-require("nvim-treesitter.configs").setup({
-  highlight = {
-    enable = true,
-  },
-})
+require("tree-sitter-manager").setup()
 
 vim.lsp.enable({
   "rust_analyzer",
